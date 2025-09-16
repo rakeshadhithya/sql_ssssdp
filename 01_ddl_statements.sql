@@ -16,7 +16,7 @@ CREATE TABLE employees (
 drop table employees;
 
 
--- DATATYPE AND CONSTRAINTS
+-- NAME, DATATYPE AND CONSTRAINTS
 CREATE TABLE employees (
     emp_no      INT             NOT NULL ,
     birth_date  DATE            NOT NULL,
@@ -135,12 +135,12 @@ DELETE FROM departments WHERE dept_no = 2;
 
 
 /*
-ALTER TABLE → structure of a table (columns, indexes, constraints).
 ALTER DATABASE → properties of a database (charset, collation, some options).
+ALTER TABLE → structure of a table (columns, indexes, constraints).
 */
 
 
--- ALTER COLUMN: ALTER (table) ADD/MODIFY/CHANGE/DROP column 
+-- ALTER COLUMN: ALTER (table) ADD/MODIFY/CHANGE/DROP column (RENAME can be used for columns from 8.0+)
 -- ADD: new, MODIFY: type constraint, CHANGE: name, type & constriant
 
 -- Add a new column to departments
