@@ -323,6 +323,7 @@ HAVING AVG(marks) >= 80;
 
 
 -- Show department-wise gender split: department, total, females, males.
+-- COUNT counts only non-null, does not consider value. SUM evaluates exp for each row and counts
 SELECT
   department,
   COUNT(*)                             AS total_students,
