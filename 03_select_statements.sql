@@ -4,6 +4,11 @@ SET SQL_SAFE_UPDATES = 1;
 
 use ssssdp;
 
+-- necessary for cleanup
+show tables;
+-- drop all tables shown
+
+
 CREATE TABLE Students (
     student_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50),
