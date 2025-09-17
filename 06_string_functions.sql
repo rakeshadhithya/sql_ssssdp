@@ -88,6 +88,18 @@ FROM employees;
 
 
 /* Miscellaneous */
+-- Rare/less common functions (optional but exist):
+
+ASCII(str) → returns numeric ASCII value of first character.
+
+ORD(str) → returns numeric value of first character.
+
+BIN(x) / HEX(str) → for binary/hex representations.
+
+FORMAT(x, d) → formats numbers as strings with commas.
+
+QUOTE(str) → returns string enclosed in quotes for SQL.
+
 -- LPAD(str, len, padstr) : Left-pad string
 SELECT LPAD('SQL', 6, '*') AS padded_left;
 
@@ -99,3 +111,5 @@ SELECT FIELD('HR', 'Finance', 'HR', 'IT') AS position;
 
 -- ELT(N, str1, str2, ...) : Return Nth string
 SELECT ELT(2, 'HR', 'Finance', 'IT') AS department;
+
+
