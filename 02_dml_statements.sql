@@ -9,7 +9,7 @@ show tables;
 DROP TABLE company_employees;
 DROP TABLE company_departments;
 DROP TABLE departments;
-DROP TABLE employees;
+DROP TABLE employees;            
 
 
 CREATE TABLE departments (
@@ -73,7 +73,7 @@ VALUES
 
 
 
--- DIFFERENT WAYS TO INSERT
+-- DIFFERENT WAYS TO INSERT (analogy: tuples matching, defulat tuple for table is full columns)
 
 -- Insert only project_id and project_name
 INSERT INTO projects (project_id, project_name)
@@ -105,7 +105,7 @@ INSERT INTO projects (project_id, project_name, start_date, end_date, budget) VA
 
 
 
--- UPDATE 
+-- UPDATE (SET single or multiple col expressions)
 
  -- Rename "IT" department to "Technology"
 UPDATE departments
@@ -140,6 +140,10 @@ WHERE project_id = 1;
 UPDATE projects
 SET budget = budget * 1.10
 WHERE project_id >1;
+/*
+10% of a number → gives just the 10% part. 10% of 200 = 200 × 0.10 = 20
+number × 1.10 → gives the original number plus its 10%. 200 × 1.10 = 200 + 20 = 220
+*/
 
 -- Extend all project end dates by one month
 UPDATE projects
