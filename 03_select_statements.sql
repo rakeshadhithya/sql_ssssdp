@@ -72,7 +72,7 @@ SELECT last_name, marks,first_name  FROM Students;
 
 
 
--- CONDITION WHERE & Relational Operators: =, !=, <>, >, >=, <, <=
+-- WHERE & Comparision Operators: =, !=, <>, >, >=, <, <=
 -- Students from Delhi
 SELECT * FROM Students WHERE city = 'Delhi';
 SELECT last_name, marks,first_name  FROM Students WHERE city = 'Delhi';
@@ -93,15 +93,16 @@ WHERE marks < 50;
 
 
 
--- Comparision & Logical Operators
+-- Membership, Range, Pattern Matching, Special & Logical Operators
 /*
-IN = "choose from a list (,,)"
+IN = "choose from a list (,,)"               for multiple values check
 
-BETWEEN = "within a range"
+BETWEEN = "within a range inclusive"         for numeric
 
-LIKE = "pattern search (wildcard)"  (like is case insensitive, use == or != for case sensitive)
+LIKE = "pattern search (wildcards % and _)"  for chars (like is case insensitive, use == or != for case sensitive)
 
-IS NULL = "blank / missing value"
+IS NULL = "blank / missing value"            for nulls
+EXISTS = checks if a subquery returns rows
 
 NOT = "exclude this condition"
 
@@ -328,7 +329,7 @@ HAVING AVG(marks) >= 80;
 
 
 -- Show department-wise gender split: department, total, females, males.
--- COUNT counts only non-null, does not consider value. SUM evaluates exp for each row and counts
+-- COUNT counts only non-null, does not consider value. SUM evaluates exp for each row and adds
 SELECT
   department,
   COUNT(*)                             AS total_students,
