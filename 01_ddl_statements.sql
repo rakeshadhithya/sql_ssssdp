@@ -18,6 +18,8 @@ drop table employees;
 
 
 -- NAME, DATATYPE AND CONSTRAINTS
+-- common datatypes: int, chr(), varchr(), date
+-- common constraints: not null, unique, check, primary key, foreign key
 CREATE TABLE employees (
     emp_no      INT             NOT NULL ,
     birth_date  DATE            NOT NULL,
@@ -137,18 +139,21 @@ DELETE FROM departments WHERE dept_no = 2;
 
 /*
 ALTER DATABASE → properties of a database (charset, collation, some options).
-ALTER TABLE → structure of a table (columns, indexes, constraints).
+ALTER TABLE → columns, indexes, constraints, structure.
 */
 
 
--- ALTER COLUMN: ALTER (table) ADD/MODIFY/CHANGE/DROP column (RENAME can be used for columns from 8.0+)
--- ADD: new, MODIFY: type constraint, CHANGE: name, type & constriant
+-- ALTER COLUMN: ALTER (table) ADD/DROP/MODIFY/CHANGE column (RENAME can be used for columns from 8.0+)
+-- ADD: new, DROP: remove, MODIFY: type constraint, CHANGE: name, type & constriant
 
 -- Add a new column to departments
 ALTER TABLE departments ADD location VARCHAR(50);
 
 -- Add a new column to employees
 ALTER TABLE employees ADD salary DECIMAL(10,2);
+
+-- Remove emp_salary column
+ALTER TABLE employees DROP COLUMN emp_salary;
 
 -- Change dept_name size from 50 → 100
 ALTER TABLE departments MODIFY dept_name VARCHAR(100);
@@ -162,23 +167,27 @@ ALTER TABLE departments CHANGE location dept_location VARCHAR(50);
 -- Rename salary → emp_salary
 ALTER TABLE employees CHANGE salary emp_salary DECIMAL(12,2);
 
--- Remove emp_salary column
-ALTER TABLE employees DROP COLUMN emp_salary;
-
-
 
 
 -- ALTER CONSTRAINT & INDEX: ADD/DROP CONSTRAINT or INDEX NAME TYPE(column) 
 -- No MODIFY/CHANGE for index & constraint, drop and re-add
 
+
+-- Add index
+ALTER TABLE table_name ADD INDEX index_name (column_name);
+
+-- Drop index
+ALTER TABLE departments DROP INDEX index_name;
+
+
 -- Add UNIQUE constraint to dept_name
 ALTER TABLE departments ADD CONSTRAINT unique_dept UNIQUE (dept_name);
 
+-- Drop unique constraint (drop index for constraint works only in mysql/maria)
+ALTER TABLE departments DROP INDEX unique_dept;
+
 -- Add CHECK constraint to ensure salary > 0
 ALTER TABLE employees ADD CONSTRAINT chk_salary CHECK (emp_salary > 0);
-
--- Drop unique constraint
-ALTER TABLE departments DROP INDEX unique_dept;
 
 -- Drop check constraint, both ways find
 ALTER TABLE employees DROP CHECK chk_salary;
@@ -197,7 +206,7 @@ ALTER TABLE employees DROP CONSTRAINT fk_dept;
 
 
 
--- ALTER TABLE: RENAME, ALTER SET DEFAULT, ALTER DROP DEFAULT
+-- ALTER TABLE: RENAME, ALTER SET/DROP DEFAULT
 -- Rename departments to company_departments
 ALTER TABLE departments RENAME TO company_departments;
 
