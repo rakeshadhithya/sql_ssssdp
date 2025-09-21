@@ -41,14 +41,14 @@ SELECT first_name, hire_date, DAYOFMONTH(hire_date) AS hire_day_number FROM empl
 SELECT first_name, hire_date, DAYOFWEEK(hire_date) AS hire_day_number FROM employees;
 -- DAYOFYEAR(date) → day number in the year (1–366)
 SELECT first_name, hire_date, DAYOFYEAR(hire_date) AS hire_day_number FROM employees;
---  WEEK() : Week number of the year
-SELECT first_name, hire_date, WEEK(hire_date) AS hire_week
-FROM employees;
 --  MONTHNAME() : Extract month name from hire_date
 SELECT first_name, hire_date, MONTHNAME(hire_date) AS hire_month_name
 FROM employees
 where MONTHNAME(hire_date)='June';
 --  MONTH() : Extract month number from hire_date
+--  WEEK() : Week number of the year
+SELECT first_name, hire_date, WEEK(hire_date) AS hire_week
+FROM employees;
 SELECT first_name, hire_date, MONTH(hire_date) AS hire_month
 FROM employees;
 --  QUARTER() : Extract quarter (1–4) from hire_date
@@ -141,7 +141,7 @@ Priya	     2078
 
 
 
--- MAKING (making not there for timestamp)
+-- MAKING & FORMATTING (making not there for timestamp)
 
 --  MAKETIME(hour, minute, second) : Create a time
 SELECT MAKETIME(12, 45, 30) AS custom_time; -- Returns 12:45:30
@@ -153,7 +153,6 @@ SELECT MAKEDATE(2025, 100) AS hundredth_day_2025; -- Returns 2025-04-10
 SELECT STR_TO_DATE('12-09-2025', '%d-%m-%Y') AS formatted_date;  -- returns 2025-09-12
 
 
--- DATE FORMATING
 -- DATE_FORMAT(date, format) → format a date/datetime as a string using a format
 SELECT DATE_FORMAT('2025-09-17 14:35:22', '%W, %M %d %Y %H:%i:%s') AS formatted;
 -- Result: Wednesday, September 17 2025 14:35:22
