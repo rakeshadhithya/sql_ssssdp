@@ -1,13 +1,3 @@
-/* Constants & Random */
--- PI() : Value of π
-SELECT PI();
-
--- RAND() : Random number between 0 and 1
-SELECT RAND() AS random;  -- 0.009479221896714738
--- find random & * 100 to get 2 digits after decimal, *1000 to get 3 digits after decimal, etc.
-SELECT ROUND(RAND()*100, 0) AS random_number;  -- round after multiplying to remove whatever after decimal point
-
-
 /* Rounding & Approximation */
 -- CEIL(x) / CEILING(x) : Smallest integer >= x 
 SELECT CEIL(45.2) AS ceil_value; -- 46
@@ -47,6 +37,18 @@ SELECT LOG(2, 10) AS log10base2;
 SELECT LOG10(1000) AS log_base10; -- 3
 
 
+
+
+/* Constants & Random */
+-- PI() : Value of π
+SELECT PI();
+
+-- RAND() : Random number between 0 and 1
+SELECT RAND() AS random;  -- 0.009479221896714738
+-- find random & * 100 to get 2 digits after decimal, *1000 to get 3 digits after decimal, etc.
+SELECT ROUND(RAND()*100, 0) AS random_number;  -- round after multiplying to remove whatever after decimal point
+
+
 /* Basic Math */
 -- ABS(x) : Absolute value
 SELECT -50 AS number, ABS(-50) AS absolute_value;
@@ -56,7 +58,6 @@ SELECT SIGN(-25), SIGN(0), SIGN(100);
 
 -- MOD(x, y) : Modulus (remainder) . you can use % instead of this
 SELECT MOD(17, 4) AS modulus; -- 1
-
 
 
 /* Comparison */ -- 
