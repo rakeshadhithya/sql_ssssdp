@@ -4,23 +4,6 @@ USE ssssdp;
 SHOW TABLES;
 DROP TABLE employees;
 
-/*
-Employees
-Column	Description
-emp_id	Unique ID for each employee
-emp_name	Employee name
-dept_id	Department where the employee works
-project_id	Project assigned to the employee
-manager_id	Manager of the employee (self join key)
-*/
-CREATE TABLE employees (
-    emp_id INT PRIMARY KEY,
-    emp_name VARCHAR(50),
-    dept_id INT,
-    project_id INT,
-    manager_id INT
-);
-
 
 /*
 Departments
@@ -49,6 +32,28 @@ CREATE TABLE projects(
     project_name VARCHAR(50)
 );
 
+
+
+/*
+Employees
+Column	Description
+emp_id	Unique ID for each employee
+emp_name	Employee name
+dept_id	Department where the employee works
+project_id	Project assigned to the employee
+manager_id	Manager of the employee (self join key)
+*/
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    project_id INT,
+    manager_id INT,
+    CONSTRAINT fk_dept FOREIGN KEY(dept_id) REFERENCES departments(dept_id),
+    CONSTRAINT fk_project FOREIGN KEY(project_id) REFERENCES projects(project_id)
+);
+
+
 /*
 Sales
 Column	Description
@@ -61,7 +66,8 @@ CREATE TABLE sales(
 	sale_id INT PRIMARY KEY,
     emp_id INT,
     sale_date DATE,
-    sale_amount INT
+    sale_amount INT,
+    CONSTRAINT fk_emp FOREIGN KEY(emp_id) REFERENCES employees(emp_id)
 );
 
 
