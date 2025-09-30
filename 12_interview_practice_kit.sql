@@ -398,7 +398,7 @@ FROM
 ) AS customer_orders
 WHERE customer_orders.rnk = 1;
 
-
+-- NOTE: aggregate function inside window function (not over) is allowed only from mysql 8.0+ and not supported for other sql servers
 
 
 
@@ -489,10 +489,79 @@ ORDER BY c.customer_id;
 
 
 
-
 -- H. Advanced / CASE (5)
 -- 36. Categorize products into High, Medium, Low price.
+SELECT
+	p.product_name,
+	CASE 
+		WHEN p.price > 60000 THEN 'High'
+        WHEN p.price BETWEEN 40000 AND 60000 THEN 'Medium'
+        ELSE 'Low'
+	END AS category
+FROM Products p;
+
+
 -- 37. High Value (>50000) or Low Value orders.
+SELECT
+	o.order_id,
+    CASE
+		WHEN SUM(od.quantity * p.price) > 50000 THEN 'High Value'
+        ELSE 'Low Value'
+	END AS category
+FROM Orders o 
+JOIN OrderDetails od ON o.order_id = od.order_id
+JOIN Products p ON od.product_id = p.product_id
+GROUP BY o.order_id
+ORDER BY o.order_id;
+
+
 -- 38. Monthly sales vs previous month (LAG).
+SELECT
+	year,
+    month,
+    sale,
+    LAG(sale) OVER (ORDER BY year, month) AS prev_month_sale
+FROM
+(
+	SELECT 
+		YEAR(o.order_date) year,
+		MONTH(o.order_date) month,
+		SUM(od.quantity * p.price) AS sale
+	FROM Orders o
+    JOIN OrderDetails od ON o.order_id = od.order_id
+    JOIN Products p ON od.product_id = p.product_id
+    GROUP BY YEAR(o.order_date), MONTH(o.order_date)
+) AS year_month_sale;
+
 -- 39. Percentage contribution of each product to revenue.
+SELECT
+	p.product_id,
+	p.product_name,
+    (SUM(od.quantity * p.price) / 
+    (
+		SELECT SUM(od.quantity * p.price) AS total_revenue
+        FROM OrderDetails od 
+        JOIN Products p ON od.product_id = p.product_id
+	)) * 100 AS contribution
+FROM OrderDetails od
+JOIN Products p ON od.product_id = p.product_id
+GROUP BY p.product_id, p.product_name
+ORDER BY contribution DESC;
+
 -- 40. Top 2 best-selling products in each category.
+SELECT
+	ranked.category,
+    ranked.product_name,
+    ranked.sales
+FROM
+(
+	SELECT 
+		p.category,
+        p.product_name,
+        SUM(od.quantity) AS sales,
+        RANK() OVER (PARTITION BY p.category ORDER BY SUM(od.quantity) DESC) AS rnk
+	FROM OrderDetails od 
+    JOIN Products p ON od.product_id = p.product_id
+    GROUP BY p.category, p.product_name
+) AS ranked
+WHERE rnk = 1 OR rnk = 2
