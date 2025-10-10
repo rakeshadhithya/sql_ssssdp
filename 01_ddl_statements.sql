@@ -9,9 +9,9 @@ USE ssssdp;
 CREATE TABLE employees (
     emp_no      INT,
     birth_date  DATE,
-    first_name  VARCHAR(14),
+    first_name  VARCHAR(14),        -- varchar: variable length with max 14 chars
     last_name   VARCHAR(16),
-    gender      CHAR(1),
+    gender      CHAR(1),            -- char: fixed length, if less fills with spaces
     hire_date   DATE
 );
 drop table employees;
