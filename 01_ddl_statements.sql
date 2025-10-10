@@ -139,7 +139,7 @@ DELETE FROM departments WHERE dept_no = 2;
 
 /*
 ALTER DATABASE → properties of a database (charset, collation, some options).
-ALTER TABLE → columns, indexes, constraints, structure.
+ALTER TABLE → columns, indexes, constraints, name&default.
 */
 
 
