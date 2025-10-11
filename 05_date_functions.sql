@@ -69,6 +69,7 @@ SELECT EXTRACT(YEAR FROM NOW());
 -- ARITHMETIC
 
 -- TIME ARITHMETIC: (there are no synonyms like time_add, etc like date arithmetic)
+-- you can pass either time/datetime or string in parameters, string automatically converts to time internally
 
 -- ADDTIME(expr1, expr2) → add a time(hhmmss) to a time/datetime
 SELECT NOW() AS current_time3, ADDTIME(NOW(), '02:30:00') AS after_2hr30min;
