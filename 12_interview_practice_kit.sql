@@ -379,7 +379,7 @@ FROM Customers c
 JOIN Orders o ON c.customer_id = o.customer_id
 JOIN OrderDetails od ON o.order_id = od.order_id
 JOIN Products p ON od.product_id = p.product_id
-GROUP BY c.customer_id, CONCAT(c.first_name, ' ', c.last_name), o.order_id;
+GROUP BY c.customer_id, CONCAT(c.first_name, ' ', c.last_name), o.order_id; 
 
 -- 30. Most recent order per customer.
 SELECT 
