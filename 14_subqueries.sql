@@ -26,7 +26,7 @@ WHERE p1.price > (
     WHERE p2.category = p1.category
 );
 
--- select categories that have products priced > 1000
+-- select categories that have at least one product priced > 1000
 SELECT DISTINCT category
 FROM Products p
 WHERE EXISTS (
