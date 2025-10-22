@@ -61,7 +61,7 @@ SELECT product_name, price,
        END AS price_category
 FROM Products;
 
---  Combine CASE WHEN with category.  (first case when is found for each row to complete from clause, then normal flow. groupby, select etc)
+--  Combine CASE WHEN with category (aggregation).  (first case when is found for each row to complete from clause, then normal flow. groupby, select etc)
 SELECT category,
        COUNT(CASE WHEN price > 500 THEN 5    END) AS expensive_products,              -- for count, value does not matter since it's not adding but counting
        COUNT( CASE WHEN price <= 500 THEN product_name END) AS affordable_products
@@ -83,7 +83,8 @@ SELECT category,
 FROM Products
 GROUP BY category;
 
--- classifying on based on two parameters
+
+-- classifying based on two parameters
 SELECT product_name, price,
        CASE 
            WHEN category = 'Electronics' AND price > 1000 THEN 'Eligible for 15% Discount'
