@@ -42,13 +42,16 @@ CREATE TABLE employees (
 
 DROP TABLE employees;
 
+-- compound key/ composite key: two or more columns are used to uniquely identify each record 
 CREATE TABLE employees (
-    emp_no      INT             NOT NULL PRIMARY KEY,
+    emp_no      INT             NOT NULL,
+    emp_id      INT             NOT NULL,
     birth_date  DATE            NOT NULL,
     first_name  VARCHAR(14)     NOT NULL,
     last_name   VARCHAR(16)     NOT NULL,
     gender      CHAR(1)         NOT NULL CHECK (gender IN ('M', 'F')),
     hire_date   DATE            NOT NULL
+    PRIMARY KEY(emp_no, emp_id)
 );
 
 DROP TABLE employees;
