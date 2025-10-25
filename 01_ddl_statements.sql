@@ -8,6 +8,7 @@ USE ssssdp;
 -- CREATE, DROP TABLE IN DATABSE (NO USE for TABLE)
 CREATE TABLE employees (
     emp_no      INT,
+    emp_sal     DECIMAL(10,3),      -- max 10 digits before point allowed, and truncated to 3 digits after decimal point
     birth_date  DATE,
     first_name  VARCHAR(14),        -- varchar: variable length with max 14 chars
     last_name   VARCHAR(16),
@@ -18,7 +19,7 @@ drop table employees;
 
 
 -- NAME, DATATYPE AND CONSTRAINTS
--- common datatypes: int, chr(), varchr(), date
+-- common datatypes: int, decimal, chr(), varchr(), date
 -- common constraints: not null, unique, check, primary key, foreign key
 CREATE TABLE employees (
     emp_no      INT             NOT NULL ,
