@@ -1,7 +1,7 @@
 -- DML: INSERT, DELETE, UPDATE, SELECT
 
 use ssssdp;
-
+ 
 -- necessary for cleanup
 show tables;
 
