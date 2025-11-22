@@ -46,12 +46,13 @@ from salesdata  as s1
 left join salesdata as s2 on 
 s1.saledate=(s2.saledate-1);      -- s1 date + 1 = s2 date i.e. LEAD on right by 1 date
 
-select s1.*,s2.* from salesdata  as s1
+select s1.*,s2.* 
+from salesdata  as s1
 left join salesdata as s2 on 
 s1.saledate=(s2.saledate+1);      -- s1 date - 1 = s2 date i.e. LAG on right by 1 date
 
 
--- lead lag by salesperson   (lag/lead of which column and by how much)
+-- lag/lead of which column and by how much (only order)
 select saleid,salesperson,saleamount,saledate,
 lead(saleamount,1) over (order by salesperson) as lead_1,
 lead(saleamount,2) over (order by salesperson) as lead_1,
@@ -60,7 +61,7 @@ lag(saleamount,2) over (order by salesperson) as lag_2
 from salesdata;
 
 
--- lead lag by salesperson (within the salesperson)
+-- lead lag (per and order)
 select saleid,salesperson,saleamount,saledate,
 lead(saleamount,1) over (partition by salesperson  order by saledate) as lead_1,
 lead(saleamount,2) over (partition by salesperson order by saledate) as lead_1,
@@ -70,27 +71,27 @@ from salesdata;
 
 
 
--- row number by order
+-- row number (order only)
 select saleid,salesperson,saleamount,saledate,
 row_number() over (order by Saledate) as num
 from salesdata;
 
--- row number within a partition and by order
+-- row number (per and order)
 select saleid,salesperson,saleamount,saledate,
 row_number() over (partition by  salesperson order by Saledate) as num
-from salesdata;
-
--- rn, rnk, drnk on different cols
-select saleid,salesperson,saleamount,saledate,
-row_number() over (partition by  salesperson order by Saledate) as num,
-rank() over ( order by Saledate) as rank_c,
-dense_rank() over (order by saleamount) as numrank
 from salesdata;
 
 -- dense rank
 select saleid,salesperson,saleamount,saledate, 
 rank() over ( order by saleamount) as rank1,           -- skips rank
 dense_rank() over ( order by saleamount) as denserank  -- does not skip rank
+from salesdata;
+
+-- rn (per and order), rnk (only order), drnk (only order)
+select saleid,salesperson,saleamount,saledate,
+row_number() over (partition by  salesperson order by Saledate) as num,
+rank() over ( order by Saledate) as rank_c,
+dense_rank() over (order by saleamount) as numrank
 from salesdata;
 
 
@@ -107,10 +108,6 @@ from salesdata;
 
 
 -- union
-select saleamount from salesdata where salesperson='Alice'
-union 
-select saleamount from salesdata where salesperson='Bob';
-
 select * from salesdata where salesperson='Bob'
 union                                                 -- no duplicate rows(saleid is unique)
 select * from salesdata where salesperson='Bob'
