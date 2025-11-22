@@ -11,7 +11,7 @@ CREATE TABLE Products (
     stock INT
 );
 
-INSERT INTO Produ cts (product_id, product_name, category, price, stock) VALUES
+INSERT INTO Products (product_id, product_name, category, price, stock) VALUES
 (1, 'Laptop A', 'Electronics', 800.00, 50),
 (2, 'Laptop B', 'Electronics', 1200.00, 20),
 (3, 'Smartphone X', 'Electronics', 600.00, 100),
@@ -45,13 +45,12 @@ Select * from products;
 
 
 -- -------------------------------------------------------------------------------------------------
--- Use IF(x,y,z) for stock status classification (single condition)
+-- Use IF(x,y,z) single condition
 SELECT product_name, stock,
        IF(stock < 20, 'Low Stock', 'Available') AS stock_status
 FROM Products;
 
-
--- Use CASE WHEN for price range classification (multiple conditions)
+-- Use CASE WHEN multiple conditions
 SELECT product_name, price,
        CASE 
            WHEN price < 100 THEN 'Budget'
@@ -61,21 +60,17 @@ SELECT product_name, price,
        END AS price_category
 FROM Products;
 
---  Combine CASE WHEN with category (aggregation).  (first case when is found for each row to complete from clause, then normal flow. groupby, select etc)
--- default else is null
-SELECT category,
-       COUNT(CASE WHEN price > 500 THEN 5    END) AS expensive_products,              -- for count, value does not matter since it's not adding but counting
-       COUNT( CASE WHEN price <= 500 THEN product_name END) AS affordable_products
-FROM Products
-GROUP BY category;
-
-SELECT category,
-       COUNT(CASE WHEN price > 500 THEN product_name  END) AS expensive_products,
-       COUNT(CASE WHEN price <= 500 THEN product_name END) AS affordable_products
-FROM Products
-GROUP BY category;
+-- multiple columns in condition
+SELECT product_name, price,
+       CASE 
+           WHEN category = 'Electronics' AND price > 1000 THEN 'Eligible for 15% Discount'
+           WHEN category = 'Furniture' AND stock < 20 THEN 'Eligible for 10% Discount'
+           ELSE 'No Discount'
+       END AS discount_policy
+FROM Products;
 
 
+--  Combine condition with aggregation.  (first case when is found for each row to complete from clause, then normal flow. groupby, select etc)
 
 -- Use IF inside aggregation.   (first all rows are found with IF to complete from clause then normal sql flow group, having, order, select etc)
 SELECT category,
@@ -84,12 +79,14 @@ SELECT category,
 FROM Products
 GROUP BY category;
 
+-- default else is null
+SELECT category,
+       COUNT(CASE WHEN price > 500 THEN 5 END) AS expensive_products,              -- for count, value does not matter since it's not adding but counting
+       COUNT( CASE WHEN price <= 500 THEN product_name END) AS affordable_products
+FROM Products
+GROUP BY category;
 
--- classifying based on two parameters
-SELECT product_name, price,
-       CASE 
-           WHEN category = 'Electronics' AND price > 1000 THEN 'Eligible for 15% Discount'
-           WHEN category = 'Furniture' AND stock < 20 THEN 'Eligible for 10% Discount'
-           ELSE 'No Discount'
-       END AS discount_policy
-FROM Products;
+
+
+
+

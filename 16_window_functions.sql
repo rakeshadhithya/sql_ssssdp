@@ -1,3 +1,5 @@
+-- WINDOWS with single table without group
+
 use ssssdp;
 show tables;
 drop view highvalueproducts;
@@ -10,6 +12,7 @@ CREATE TABLE salesdata (
     saleamount DECIMAL(10, 2),
     saledate DATE
 );
+
 -- Insert 20 records into the salesdata table
 INSERT INTO salesdata (saleid, salesperson, saleamount, saledate) VALUES
 (1, 'Alice', 1500.50, '2025-01-01'),
@@ -35,8 +38,9 @@ INSERT INTO salesdata (saleid, salesperson, saleamount, saledate) VALUES
 
 
 
+-- salesdata(saleid, salesperson,saleamount,saledate)
 
--- self join 
+-- lag/lead with self join 
 select s1.*,s2.* 
 from salesdata  as s1
 left join salesdata as s2 on 

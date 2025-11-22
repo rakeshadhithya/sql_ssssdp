@@ -62,8 +62,8 @@ SELECT -50 AS number, ABS(-50) AS absolute_value;
 -- SIGN(x) : Returns -1, 0, or 1 depending on sign
 SELECT SIGN(-25), SIGN(0), SIGN(100);
 
--- MOD(x, y) : Modulus (remainder) . you can use % instead of this
-SELECT MOD(17, 4) AS modulus; -- 1
+-- -- MOD(x, y) : Modulus (remainder) . you can use % instead of this
+-- SELECT MOD(17, 4) AS modulus; -- 1
 
 
 /* Comparison */ -- 
