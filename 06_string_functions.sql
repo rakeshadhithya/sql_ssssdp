@@ -1,3 +1,5 @@
+-- LENGTH, TRIM, SEARCH, SUBSTRING, MODIFICATION
+
 /* Length */
 -- LENGTH(str) : Returns length in bytes
 SELECT first_name, LENGTH(first_name) AS name_length
@@ -21,7 +23,7 @@ SELECT CONCAT('Hello', SPACE(5), 'World') AS spaced_text;
 
 
 -- NOTE: THERE IS NO 0 BASED INDEXING IN ANYWHERE IN SQL, ONLY COUNT BASED
-/* Search & Position */
+/* Search */
 -- INSTR(str, substr) : Returns position of substring
 SELECT email, INSTR(email, 'e') AS at_position
 FROM employees;
@@ -49,8 +51,8 @@ Positive N = "left part up to the Nth occurrence from the left."
 Negative N = "right part after the Nth occurrence from the right."
 */
 SELECT email,
-       SUBSTRING_INDEX(email, '@', 1) AS username,
-       SUBSTRING_INDEX(email, '@', -1) AS domain
+       SUBSTRING_INDEX(email, '@', 1) AS username,  -- upto first occurence from left
+       SUBSTRING_INDEX(email, '@', -1) AS domain    -- upto first occurence from right
 FROM employees;
 
 

@@ -336,7 +336,7 @@ JOIN Orders o ON c.customer_id = o.customer_id
 JOIN OrderDetails od ON o.order_id = od.order_id
 JOIN Products p ON od.product_id = p.product_id
 GROUP BY c.customer_id                                     -- don't group by name, as people have same names
-HAVING SUM(p.price * od.quantity) > 100000;
+HAVING SUM(p.price * od.quantity) > 100000;                        
 
 
 -- F. Windows (5)

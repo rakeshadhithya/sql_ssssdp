@@ -1,15 +1,22 @@
-/* Rounding & Approximation */
--- CEIL(x) / CEILING(x) : Smallest integer >= x 
-SELECT CEIL(45.2) AS ceil_value; -- 46
+-- ROUND, POWER, LOG, MATH, COMPARISION
 
--- FLOOR(x) : Largest integer <= x        
-SELECT FLOOR(45.8) AS floor_value; -- 45
+/* Rounding & Approximation */
+-- CEIL(x) / CEILING(x) : Smallest integer >= x (towards + infinity)
+SELECT CEIL(45.2) AS ceil_value;        -- 46
+SELECT CEIL(-45.2) AS ceil_negative;    -- -45   
+
+-- FLOOR(x) : Largest integer <= x (towards - infinity)
+SELECT FLOOR(45.8) AS floor_value;      -- 45
+SELECT FLOOR(-45.8) AS floor_negative;  -- -46   
 
 -- ROUND(x, d) : Round number to d decimals
-SELECT ROUND(123.4467, 1) AS rounded_value; -- 123.46
+SELECT ROUND(123.4467, 2) AS rounded_value;        -- 123.45  (MySQL "bankers rounding")
+SELECT ROUND(-123.4467, 2) AS rounded_negative;    -- -123.45
 
--- TRUNCATE(x, d) : Truncate number to d decimals
-SELECT TRUNCATE(123.4567, 3) AS truncated_value; -- 123.45
+-- TRUNCATE(x, d) : Truncate number to d decimals 
+SELECT TRUNCATE(123.4567, 3) AS truncated_value;     -- 123.456
+SELECT TRUNCATE(-123.4567, 3) AS truncated_negative; -- -123.456
+
 
 
 /* Powers & Roots */
@@ -24,22 +31,23 @@ SELECT SQRT(49) AS square_root; -- 7
 
 
 /* Logarithms */
--- LOG(x) : Natural logarithm
-SELECT LOG(10) AS natural_log;
-
 -- LN(x) : Natural logarithm (same as LOG(x))
 SELECT LN(10) AS natural_log;
 
--- LOG(b, x) : Logarithm of x base b
-SELECT LOG(2, 10) AS log10base2;
+-- LOG(x) : Natural logarithm
+SELECT LOG(10) AS natural_log;
 
 -- LOG10(x) : Base-10 logarithm
 SELECT LOG10(1000) AS log_base10; -- 3
 
+-- LOG(b, x) : Logarithm of x base b
+SELECT LOG(2, 10) AS log10base2;
 
 
 
-/* Constants & Random */
+
+
+/* Basic Math */
 -- PI() : Value of π
 SELECT PI();
 
@@ -48,8 +56,6 @@ SELECT RAND() AS random;  -- 0.009479221896714738
 -- find random & * 100 to get 2 digits after decimal, *1000 to get 3 digits after decimal, etc.
 SELECT ROUND(RAND()*100, 0) AS random_number;  -- round after multiplying to remove whatever after decimal point
 
-
-/* Basic Math */
 -- ABS(x) : Absolute value
 SELECT -50 AS number, ABS(-50) AS absolute_value;
 

@@ -7,17 +7,17 @@ USE ssssdp;
 
 -- CREATE, DROP TABLE IN DATABSE (NO USE for TABLE)
 CREATE TABLE employees (
-    emp_no      INT,
+    emp_no      INT, 
     emp_sal     DECIMAL(10,3),      -- max 10 digits before point allowed, and truncated to 3 digits after decimal point
     birth_date  DATE,
     first_name  VARCHAR(14),        -- varchar: variable length with max 14 chars
     last_name   VARCHAR(16),
     gender      CHAR(1),            -- char: fixed length, if less fills with spaces
     hire_date   DATE
-);
+); 
 drop table employees;
 
-
+ 
 -- NAME, DATATYPE AND CONSTRAINTS
 -- common datatypes: int, decimal, chr(), varchr(), date
 -- common constraints: not null, unique, check, primary key, foreign key
@@ -32,6 +32,7 @@ CREATE TABLE employees (
 
 DROP TABLE employees;
 
+-- multiple constraints
 CREATE TABLE employees (
     emp_no      INT             NOT NULL PRIMARY KEY,
     birth_date  DATE            NOT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE employees (
 
 DROP TABLE employees;
 
--- compound key/ composite key: two or more columns are used to uniquely identify each record 
+-- compound key/ composite key: primary/unique key with 2+ columns 
 CREATE TABLE employees (
     emp_no      INT             NOT NULL,
     emp_id      INT             NOT NULL,
@@ -52,7 +53,8 @@ CREATE TABLE employees (
     last_name   VARCHAR(16)     NOT NULL,
     gender      CHAR(1)         NOT NULL CHECK (gender IN ('M', 'F')),
     hire_date   DATE            NOT NULL
-    PRIMARY KEY(emp_no, emp_id)
+    PRIMARY KEY(emp_no, emp_id) 
+    -- UNIQUE (emp_no, emp_id)
 );
 
 DROP TABLE employees;
@@ -61,9 +63,9 @@ DROP TABLE employees;
 
 
 
-
+ 
 -- CONSTRAINT FOREIGN KEY (as the last column)
-
+ 
 CREATE TABLE departments (
     dept_no     INT PRIMARY KEY,
     dept_name   VARCHAR(50) NOT NULL UNIQUE
@@ -85,22 +87,23 @@ VALUES (1, 'Human Resources'),
        (2, 'Finance'), 
        (3, 'IT');
        
- INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date, dept_no)
+INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date, dept_no)
 VALUES (101, '1990-01-01', 'Arun', 'Vasa', 'M', '2020-05-01', 3),
        (102, '1992-03-10', 'Anita', 'Shah', 'F', '2021-06-01', 2);      
 
 
 
 -- BENEFITS OF FOREIGN KEY
-       
--- Fails because, foreign key 11 is not present in departments table
+
+-- parent table is the one with primary key, child table is the one with foreign key
+select * from employees;     -- child table
+select * from departments;   -- parent table
+ 
+-- child table: Fails because, foreign key 11 is not present in departments table
 INSERT INTO employees (emp_no, birth_date, first_name, last_name, gender, hire_date, dept_no)
 VALUES (103, '1991-07-15', 'John', 'Doe', 'M', '2022-08-01', 11);       
 
--- parent table: the one with primary key, child table the one with foreign key
-select * from employees;     -- child table
-select * from departments;   -- parent table
--- without cascade, cannot delete or update parent row: foreign key constraint fail when that value is present in child table
+-- parent table: without cascade, cannot delete or update parent row: foreign key constraint fail when that value is present in child table
 DELETE FROM departments WHERE dept_no = 2;
 
 drop table employees;
@@ -134,8 +137,9 @@ VALUES (101, '1990-01-01', 'Arun', 'Vasa', 'M', '2020-05-01', 3),
        
 select * from employees;
 select * from departments;
--- now this works, it deletes rows in child table with foreign key value as this
+-- now this works, it deletes rows in parent table with foreign key value as this
 DELETE FROM departments WHERE dept_no = 2;
+
 
 
 
@@ -143,12 +147,23 @@ DELETE FROM departments WHERE dept_no = 2;
 
 /*
 ALTER DATABASE → properties of a database (charset, collation, some options).
-ALTER TABLE → columns, indexes, constraints, name&default.
+ALTER TABLE → name&defaults, columns, indexes & constraints
 */
 
+-- TABLE: RENAME, SET/DROP DEFAULT
 
--- ALTER COLUMN: ALTER (table) ADD/DROP/MODIFY/CHANGE column (RENAME can be used for columns from 8.0+)
--- ADD: new, DROP: remove, MODIFY: type constraint, CHANGE: name, type & constriant
+-- Rename employees to company_employees
+ALTER TABLE employees RENAME TO company_employees;
+
+-- Set default hire_date as today
+ALTER TABLE employees ALTER hire_date SET DEFAULT (CURRENT_DATE);
+
+-- Remove default
+ALTER TABLE employees ALTER hire_date DROP DEFAULT;
+
+
+-- COLUMNS: ALTER (table) ADD/DROP/MODIFY/CHANGE column (RENAME can be used for columns from 8.0+)
+-- ADD: new, DROP COLUMN: remove, MODIFY: type constraints, CHANGE: name, type & constriants
 
 -- Add a new column to departments
 ALTER TABLE departments ADD location VARCHAR(50);
@@ -173,22 +188,15 @@ ALTER TABLE employees CHANGE salary emp_salary DECIMAL(12,2);
 
 
 
--- ALTER CONSTRAINT & INDEX: ADD/DROP CONSTRAINT or INDEX NAME TYPE(column) 
--- No MODIFY/CHANGE for index & constraint, drop and re-add
-
-
--- Add index
-ALTER TABLE table_name ADD INDEX index_name (column_name);
-
--- Drop index
-ALTER TABLE departments DROP INDEX index_name;
+-- CONSTRAINTS & INDEXES: ADD/DROP CONSTRAINT/INDEX NAME TYPE(column) [No MODIFY/CHANGE for index & constraint, drop and re-add]
+-- Indexes: Indexes speed up select queries to find rows without scanning entire table but slow down insert/update/delete because of extra storage
 
 
 -- Add UNIQUE constraint to dept_name
-ALTER TABLE departments ADD CONSTRAINT unique_dept UNIQUE (dept_name);
+ALTER TABLE departments ADD INDEX idx_dept_name (dept_name);
 
 -- Drop unique constraint (drop index for constraint works only in mysql/maria)
-ALTER TABLE departments DROP INDEX unique_dept;
+ALTER TABLE departments DROP INDEX idx_dept_name;
 
 -- Add CHECK constraint to ensure salary > 0
 ALTER TABLE employees ADD CONSTRAINT chk_salary CHECK (emp_salary > 0);
@@ -210,27 +218,10 @@ ALTER TABLE employees DROP CONSTRAINT fk_dept;
 
 
 
--- ALTER TABLE: RENAME, ALTER SET/DROP DEFAULT
--- Rename departments to company_departments
-ALTER TABLE departments RENAME TO company_departments;
 
--- Rename employees to company_employees
-ALTER TABLE employees RENAME TO company_employees;
-
--- Set default hire_date as today
-ALTER TABLE employees ALTER hire_date SET DEFAULT (CURRENT_DATE);
-
--- Remove default
-ALTER TABLE employees ALTER hire_date DROP DEFAULT;
-
+-- DROP/TRUNCATE TABLE
 -- Drop the employees table
 DROP TABLE employees;
 
--- Drop the departments table
-DROP TABLE departments;
-
-
-
--- TRUNCATE
--- Now truncate
-TRUNCATE TABLE employees;
+-- Truncate the departments table
+TRUNCATE TABLE departments;

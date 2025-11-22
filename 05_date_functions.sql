@@ -1,3 +1,5 @@
+-- CURRENT, TIME/DATE EXTRACTION, TIME/DATE/TIMESTAMP ARITHMETIC, MAKING
+
 -- CURRENT : returns the date, time, timestamp(date & time) of the system where the MySQL server is running.
 
 --  CURRENT_DATE : Returns today's date
@@ -13,7 +15,6 @@ SELECT NOW();
 SELECT LOCALTIME();
 SELECT LOCALTIMESTAMP();
 SELECT SYSDATE();              -- same as NOW but evaluated at execution time
-
 
 
 
@@ -39,7 +40,7 @@ SELECT first_name, hire_date, DAY(hire_date) AS hire_day_number FROM employees;
 SELECT first_name, hire_date, DAYOFMONTH(hire_date) AS hire_day_number FROM employees;
 -- DAYOFWEEK(date) → weekday index (1 = Sunday ... 7 = Saturday)
 SELECT first_name, hire_date, DAYOFWEEK(hire_date) AS hire_day_number FROM employees;
--- DAYOFYEAR(date) → day number in the year (1–366)
+-- DAYOFYEAR(date) → day number in the year (1–366) 
 SELECT first_name, hire_date, DAYOFYEAR(hire_date) AS hire_day_number FROM employees;
 --  MONTHNAME() : Extract month name from hire_date
 SELECT first_name, hire_date, MONTHNAME(hire_date) AS hire_month_name

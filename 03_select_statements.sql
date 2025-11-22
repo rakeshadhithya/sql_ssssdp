@@ -1,4 +1,3 @@
-
 SET SQL_SAFE_UPDATES = 0;
 SET SQL_SAFE_UPDATES = 1;
 
@@ -99,7 +98,7 @@ IN = "choose from a list (,,)"               for multiple values check
 
 BETWEEN = "within a range inclusive"         for numeric
 
-LIKE = "pattern search (wildcards % and _)"  for chars (like is case insensitive, use == or != for case sensitive)
+LIKE = "pattern search (wildcards: % and _)"  for chars (like is case insensitive, use == or != for case sensitive)
 
 IS NULL = "blank / missing value"            for nulls
 EXISTS = checks if a subquery returns rows
@@ -109,8 +108,7 @@ NOT = "exclude this condition"
 AND = "both conditions must be true"
 
 OR = "any one is enough"
-
-*/ 
+*/
 
 
 -- IN
@@ -296,7 +294,7 @@ SELECT COUNT(*) FROM Students;
 
 
 
--- GROUP BY (For unique columns, or aggregate remaining columns)
+-- GROUP BY (For unique columns, or aggregate remaining columns) [where before group, having after group]
 
 -- Group by department
 SELECT department, AVG(marks) AS avg_marks 

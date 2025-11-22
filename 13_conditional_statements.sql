@@ -11,7 +11,7 @@ CREATE TABLE Products (
     stock INT
 );
 
-INSERT INTO Products (product_id, product_name, category, price, stock) VALUES
+INSERT INTO Produ cts (product_id, product_name, category, price, stock) VALUES
 (1, 'Laptop A', 'Electronics', 800.00, 50),
 (2, 'Laptop B', 'Electronics', 1200.00, 20),
 (3, 'Smartphone X', 'Electronics', 600.00, 100),
@@ -62,6 +62,7 @@ SELECT product_name, price,
 FROM Products;
 
 --  Combine CASE WHEN with category (aggregation).  (first case when is found for each row to complete from clause, then normal flow. groupby, select etc)
+-- default else is null
 SELECT category,
        COUNT(CASE WHEN price > 500 THEN 5    END) AS expensive_products,              -- for count, value does not matter since it's not adding but counting
        COUNT( CASE WHEN price <= 500 THEN product_name END) AS affordable_products

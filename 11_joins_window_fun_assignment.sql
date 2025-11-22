@@ -86,12 +86,13 @@ SELECT e.emp_name, s.sale_amount AS curr_sale,
 FROM sales s 
   JOIN employees e ON s.emp_id = e.emp_id;
 
+
 -- 2.	For each employee’s sales, show the next sale amount (using LEAD).
 SELECT e.emp_name, s.sale_amount AS curr_sale,
 		LEAD(s.sale_amount) OVER (PARTITION BY s.emp_id ORDER BY s.sale_date) AS next_sale
 FROM sales s 
   JOIN employees e ON s.emp_id = e.emp_id;
-  
+
 -- 3.	Show the difference between each employee’s current sale and their previous sale.
 SELECT e.emp_name,
 	   s.sale_amount - LAG(s.sale_amount) OVER (PARTITION BY s.emp_id ORDER BY s.sale_date) AS sale_diff
